@@ -2,12 +2,22 @@ import { User } from "./models/User";
 
 const user = new User({ name: 'new record', age: 0 });
 
-// user.set({ name: 'Jason', age: 20 });
+console.log(user.get('name'));
 
-user.events.on('change', () => {
-  console.log('change!');
+user.on('change', () => {
+  console.log('user was chaned');
 });
 
-user.events.trigger('change');
+user.trigger('change');
 
-user.save();
+// Reminder on how 'this' works in Javascript
+
+// const colors = {
+//   color: 'red',
+//   printColor() {
+//     console.log(this.color);
+//   }
+// };
+
+// const printColor = colors.printColor;
+// printColor();
