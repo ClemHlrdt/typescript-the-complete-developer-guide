@@ -27,23 +27,18 @@ export class Model<T extends HasId> {
     private sync: Sync<T>
   ) { }
 
-  get on() {
-    return this.events.on;
-  }
+  // Getters
+  on = this.events.on;
+  trigger = this.events.trigger;
+  get = this.attributes.get;
 
-  get trigger() {
-    return this.events.trigger;
-  }
-
-  get get() {
-    return this.attributes.get;
-  }
-
+  // set attributs
   set(update: T): void {
     this.attributes.set(update);
     this.events.trigger('change');
   }
 
+  // fetch data
   fetch(): void {
     const id = this.attributes.get('id');
     if (typeof id !== 'number') {
@@ -55,6 +50,7 @@ export class Model<T extends HasId> {
     });
   }
 
+  // save data
   save(): void {
     this.sync.save(this.attributes.getAll()).then((response: AxiosResponse) => {
       this.trigger('save');
